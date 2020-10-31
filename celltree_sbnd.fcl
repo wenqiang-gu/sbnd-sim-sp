@@ -38,7 +38,9 @@ physics:
 }
 
 
-# physics.analyzers.wirecell.nRawSamples : 6000
+physics.analyzers.wirecell.nRawSamples : 3000
+physics.analyzers.wirecell.saveRaw: true
+
 physics.analyzers.wirecell.saveJSON : false
 physics.analyzers.wirecell.SpacePointLabels : ["cluster3d","pandoraICARUS", "truthDepo"]
 #physics.analyzers.wirecell.SimEnergyDepositLabel : "ionization"

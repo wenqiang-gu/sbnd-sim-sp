@@ -2,7 +2,7 @@ int anodeId(int channelId){
   return (int)(channelId / 2560);
 }
 
-void celltree_th2f(std::string filename="celltree.root", int chmin=0, int chmax=1800, int nticks=9600){ // [chmin, chmax]
+void dump_waveform(int chmin=0, int chmax=1800, int nticks=3000, std::string filename="celltree.root"){ // [chmin, chmax]
   auto in = TFile::Open(filename.c_str());
   auto t = dynamic_cast<TTree*>(in->Get("Event/Sim"));
 
@@ -31,7 +31,10 @@ void celltree_th2f(std::string filename="celltree.root", int chmin=0, int chmax=
   std::cout << simide_size << std::endl; 
   std::cout << simide_channelIdY->size() << std::endl;
 
-  auto h1 = new TH2F("h1","calib", chmax-chmin+1, chmin-0.5, chmax+0.5, nticks, 0,nticks);
+  auto h1 = new TH2F("h1","waveform", chmax-chmin+1, chmin-0.5, chmax+0.5, nticks, 0,nticks);
+  h1->GetXaxis()->SetTitle("chID");
+  h1->GetYaxis()->SetTitle("Ticks");
+
   auto h2 = new TH2F("h2","simChan", chmax-chmin+1, chmin-0.5, chmax+0.5, nticks, 0,nticks);
 
   // calib_wf
@@ -68,10 +71,10 @@ void celltree_th2f(std::string filename="celltree.root", int chmin=0, int chmax=
   	}
   }
 
-  auto ofile = new TFile("celltree_th2f.root","recreate");
+  auto ofile = new TFile("waveform.root","recreate");
   h1->Write();
-  h2->Write();
-  h3->Write();
+  // h2->Write();
+  // h3->Write();
   ofile->Close();
 
 }
